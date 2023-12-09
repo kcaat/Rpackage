@@ -2,10 +2,20 @@ Package: dummypack
 Type: Package
 Title: What the Package Does (Title Case)
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Author: Katherine Lu
+Maintainer: Katherine Lu <kat.lu@mail.utoronto.ca>
 Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+    dummyfreq creates a table 1 of frequencies for levels of a multi-option variable
+    dummyvar combines exclusive dummy variables into one variable
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Depends: 
+    R (>= 2.10)
+Imports: 
+    dplyr,
+    table1
+RoxygenNote: 7.2.3
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
