@@ -1,27 +1,212 @@
 ---
-title: "Dummypack"
+title: "dummypack"
 author: "Katherine Lu"
-format: html
+format: revealjs
 editor: visual
 ---
 
-## Quarto
+## templates
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+| Urban | Suburban | Rural |
+|:-----:|:--------:|:-----:|
+|   0   |    1     |   0   |
+|   0   |    0     |   1   |
+|   1   |    0     |   0   |
+|  ...  |   ...    |  ...  |
 
-## Running Code
+## Imagine... {background-color="#f0edf2"}
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+\
 
-```{r}
-1 + 1
+#### SURVEY
+
+> **What type of area do you live in?**
+>
+> a)  Urban
+> b)  Suburban
+> c)  Rural
+
+## Q: What type of area do you live in? {background-color="#f0edf2"}
+
+Survey results: dummy variables
+
+-   AreaType1 = urban, AreaType2 = suburban, AreaType3 = rural
+
+```{r, include=FALSE}
+library(dplyr)
+library(here)
+surveydata <- read.csv(here("data/randomsurvey.csv"))
+data1 <- surveydata %>%
+    select(starts_with("AreaType"))
 ```
 
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
+``` r
+head(data1, n = 5)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+```{r, message=FALSE, warning=FALSE}
+head(data1, n = 5)
+```
+
+## dummyvar {background-color="#f0edf2"}
+
+#### dummyvar(data, prefix, label_list, varname)
+
+-   data: your data
+-   prefix: prefix of group of dummy variables
+-   label_list: list of labels to rename dummy variables (optional)
+-   varname: label for your combined variable (optional)
+
+Output: dataset with added combined variable
+
+## Example {background-color="#f0edf2"}
+
+``` r
+area_labels <- c("Urban", "Suburban", "Rural")
+
+data2 <- dummyvar(data=surveydata, prefix="AreaType", label_list=area_labels, varname="Area Types")
+```
+
+## Example {background-color="#f0edf2"}
+
+Create a Table 1 using our new combined variable
+
+```r
+table1(~combined, data=data2)
+```
+
+\
+
+![](images/dummyvartable1.png){fig-align="center" width=auto}
+
+\
+
+## Inside the function {background-color="#f0edf2"}
+
+``` r
+dummyvar <- function(data, prefix, label_list, varname){
+
+  #subset data based on dummy vars prefix
+  subset <- data %>%
+    dplyr::select(dplyr::starts_with(prefix))
+
+  #rename variables based on labels list, if provided
+  if (!missing(label_list)) {
+    colnames(subset) <- label_list
+  }
+
+  #create combined variable in original dataframe, using subset
+  data$combined <- colnames(subset)[max.col(subset)]
+
+  #factor the combined variable
+  data$combined <- factor(data$combined)
+
+  #label the combined variable, if varname provided
+  #if not provided, use prefix
+  if (missing(varname)) {
+    table1::label(data$combined) <- prefix
+  } else {
+    table1::label(data$combined) <- varname
+  }
+
+  #return dataframe, with new combined variable
+  return(data)
+}
+```
+
+## What if... {.smaller background-color="#f0edf2"}
+
+### SURVEY
+
+> **Select your top 3 most important community aspects:**
+>
+> a)  Health
+> b)  Education
+> c)  Transportation
+> d)  Social services
+> e)  Safety
+> f)  Diversity and inclusion
+> g)  Housing
+
+
+## Q: Select your top 3 most important community aspects {background-color="#f0edf2"}
+
+Survey results:
+
+*   dummy variables are NOT exclusive
+*   cannot combine into one variable
+
+```{r, include=FALSE}
+data1 <- surveydata %>%
+    select(starts_with("Aspect"))
+```
+
+``` r
+head(data1, n = 5)
+```
+
+```{r, message=FALSE, warning=FALSE}
+head(data1, n = 5)
+```
+
+
+## dummyfreq {background-color="#f0edf2"}
+
+#### dummyfreq(data, prefix, label_list, title)
+
+-   data: your data
+-   prefix: prefix of group of dummy variables
+-   label_list: list of labels to rename dummy variables (optional)
+-   title: title for table 1 (optional)
+
+Output: table 1 for one set of dummy variables
+
+## Example {background-color="#f0edf2"}
+
+``` r
+category_names <- c("Health", "Education", "Transportation", "Social services", "Safety", "Diversity & inclusion", "Housing")
+
+dummyfreq(data=randomsurvey, prefix="Aspect", label_list=category_names, title="Community aspects")
+```
+
+![](images/dummyfreqtable1.png){fig-align="center" width="400"}
+
+## Inside the function {background-color="#f0edf2"}
+```r
+dummyfreq <- function(data, prefix, label_list, title){
+
+  #subset data based on dummy prefix
+  data <- data %>%
+    dplyr::select(dplyr::starts_with(prefix))
+
+  #rename variables based on labels list, if provided
+  if (!missing(label_list)) {
+    colnames(data) <- label_list
+  }
+
+  #add title if provided
+  #if no title argument, use variable prefix
+  if (missing(title)) {
+    title1 <- paste(prefix, "n (%)")
+  } else {
+    title1 <- paste(title, "n (%)")
+  }
+
+  #turn dummy vars into logicals
+  data[colnames(data)] <- lapply(data[colnames(data)], as.logical)
+
+  #create render so that only YES is shown
+  rndr <- function(x, ...) {
+    y <- table1::render.default(x, ...)
+    if (is.logical(x)) y[2] else y
+  }
+
+  #create table1
+  return(table1::table1(~ ., data=data, caption=title1, render=rndr))
+}
+```
+
+## Thank you {background-color="#f0edf2"}
+
+![](images/dummies.jpg){fig-align="center" width=auto}
+
