@@ -96,7 +96,6 @@
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="package_files/libs/revealjs/dist/theme/quarto.css">
-  <link rel="stylesheet" href="styles.css">
   <link href="package_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="package_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="package_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -402,53 +401,40 @@ Katherine Lu
 </div>
 
 </section>
-<section id="templates" class="slide level2">
-<h2>templates</h2>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Urban</th>
-<th style="text-align: center;">Suburban</th>
-<th style="text-align: center;">Rural</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">…</td>
-<td style="text-align: center;">…</td>
-<td style="text-align: center;">…</td>
-</tr>
-</tbody>
-</table>
-</section>
 <section id="imagine" class="slide level2" data-background-color="#f0edf2">
 <h2>Imagine…</h2>
 <p><br>
 </p>
 <h4 id="survey">SURVEY</h4>
-<blockquote>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
 <p><strong>What type of area do you live in?</strong></p>
+</div>
+<div class="callout-content">
 <ol type="a">
 <li>Urban</li>
 <li>Suburban</li>
 <li>Rural</li>
 </ol>
-</blockquote>
+</div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>a survey asking about the community you live in</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="q-what-type-of-area-do-you-live-in" class="slide level2" data-background-color="#f0edf2">
 <h2>Q: What type of area do you live in?</h2>
@@ -456,7 +442,7 @@ Katherine Lu
 <ul>
 <li>AreaType1 = urban, AreaType2 = suburban, AreaType3 = rural</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">head</span>(data1, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">head</span>(data1, <span class="at">n =</span> <span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>  AreaType1 AreaType2 AreaType3
@@ -464,9 +450,35 @@ Katherine Lu
 2         0         1         0
 3         0         1         0
 4         0         1         0
-5         0         1         0</code></pre>
+5         0         1         0
+6         0         1         0
+7         0         0         1
+8         0         1         0</code></pre>
 </div>
 </div>
+<aside class="notes">
+<ul>
+<li>this is how a survey question with multiple options gets coded</li>
+<li>eg. in RedCap, dummy variables called AreaType1,2,3 auto generated</li>
+<li>not very intuitive to look at</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="objective" class="slide level2" data-background-color="#f0edf2">
+<h2>Objective</h2>
+<p><br>
+</p>
+<h4 id="create-a-function-to-quickly-combine-dummy-variables-into-one-variable-with-appropriate-category-names">Create a function to quickly combine dummy variables into one variable with appropriate category names</h4>
 </section>
 <section id="dummyvar" class="slide level2" data-background-color="#f0edf2">
 <h2>dummyvar</h2>
@@ -483,12 +495,64 @@ Katherine Lu
 <h2>Example</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>area_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Urban"</span>, <span class="st">"Suburban"</span>, <span class="st">"Rural"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a>data2 <span class="ot">&lt;-</span> <span class="fu">dummyvar</span>(<span class="at">data=</span>surveydata, <span class="at">prefix=</span><span class="st">"AreaType"</span>, <span class="at">label_list=</span>area_labels, <span class="at">varname=</span><span class="st">"Area Types"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3"></a>data2 <span class="ot">&lt;-</span> <span class="fu">dummyvar</span>(<span class="at">data=</span>data1, <span class="at">prefix=</span><span class="st">"AreaType"</span>, <span class="at">label_list=</span>area_labels, <span class="at">varname=</span><span class="st">"Area Types"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<ul>
+<li>we will apply dummyvar to our example data (discuss arguments)</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="example-1" class="slide level2" data-background-color="#f0edf2">
 <h2>Example</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>area_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Urban"</span>, <span class="st">"Suburban"</span>, <span class="st">"Rural"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>data2 <span class="ot">&lt;-</span> <span class="fu">dummyvar</span>(<span class="at">data=</span>data1, <span class="at">prefix=</span><span class="st">"AreaType"</span>, <span class="at">label_list=</span>area_labels, <span class="at">varname=</span><span class="st">"Area Types"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><br>
+</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">head</span>(data2, <span class="at">n=</span><span class="dv">8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  AreaType1 AreaType2 AreaType3 combined
+1         1         0         0    Urban
+2         0         1         0 Suburban
+3         0         1         0 Suburban
+4         0         1         0 Suburban
+5         0         1         0 Suburban
+6         0         1         0 Suburban
+7         0         0         1    Rural
+8         0         1         0 Suburban</code></pre>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>the dataset now has the new column “combined”</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="example-2" class="slide level2" data-background-color="#f0edf2">
+<h2>Example</h2>
 <p>Create a Table 1 using our new combined variable</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">table1</span>(<span class="sc">~</span>combined, <span class="at">data=</span>data2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">table1</span>(<span class="sc">~</span>combined, <span class="at">data=</span>data2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><br>
 </p>
 
@@ -497,40 +561,44 @@ Katherine Lu
 </section>
 <section id="inside-the-function" class="slide level2" data-background-color="#f0edf2">
 <h2>Inside the function</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>dummyvar <span class="ot">&lt;-</span> <span class="cf">function</span>(data, prefix, label_list, varname){</span>
-<span id="cb5-2"><a href="#cb5-2"></a></span>
-<span id="cb5-3"><a href="#cb5-3"></a>  <span class="co">#subset data based on dummy vars prefix</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a>  subset <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(dplyr<span class="sc">::</span><span class="fu">starts_with</span>(prefix))</span>
-<span id="cb5-6"><a href="#cb5-6"></a></span>
-<span id="cb5-7"><a href="#cb5-7"></a>  <span class="co">#rename variables based on labels list, if provided</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">missing</span>(label_list)) {</span>
-<span id="cb5-9"><a href="#cb5-9"></a>    <span class="fu">colnames</span>(subset) <span class="ot">&lt;-</span> label_list</span>
-<span id="cb5-10"><a href="#cb5-10"></a>  }</span>
-<span id="cb5-11"><a href="#cb5-11"></a></span>
-<span id="cb5-12"><a href="#cb5-12"></a>  <span class="co">#create combined variable in original dataframe, using subset</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a>  data<span class="sc">$</span>combined <span class="ot">&lt;-</span> <span class="fu">colnames</span>(subset)[<span class="fu">max.col</span>(subset)]</span>
-<span id="cb5-14"><a href="#cb5-14"></a></span>
-<span id="cb5-15"><a href="#cb5-15"></a>  <span class="co">#factor the combined variable</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a>  data<span class="sc">$</span>combined <span class="ot">&lt;-</span> <span class="fu">factor</span>(data<span class="sc">$</span>combined)</span>
-<span id="cb5-17"><a href="#cb5-17"></a></span>
-<span id="cb5-18"><a href="#cb5-18"></a>  <span class="co">#label the combined variable, if varname provided</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a>  <span class="co">#if not provided, use prefix</span></span>
-<span id="cb5-20"><a href="#cb5-20"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(varname)) {</span>
-<span id="cb5-21"><a href="#cb5-21"></a>    table1<span class="sc">::</span><span class="fu">label</span>(data<span class="sc">$</span>combined) <span class="ot">&lt;-</span> prefix</span>
-<span id="cb5-22"><a href="#cb5-22"></a>  } <span class="cf">else</span> {</span>
-<span id="cb5-23"><a href="#cb5-23"></a>    table1<span class="sc">::</span><span class="fu">label</span>(data<span class="sc">$</span>combined) <span class="ot">&lt;-</span> varname</span>
-<span id="cb5-24"><a href="#cb5-24"></a>  }</span>
-<span id="cb5-25"><a href="#cb5-25"></a></span>
-<span id="cb5-26"><a href="#cb5-26"></a>  <span class="co">#return dataframe, with new combined variable</span></span>
-<span id="cb5-27"><a href="#cb5-27"></a>  <span class="fu">return</span>(data)</span>
-<span id="cb5-28"><a href="#cb5-28"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>dummyvar <span class="ot">&lt;-</span> <span class="cf">function</span>(data, prefix, label_list, varname){</span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="co">#subset data based on dummy vars prefix</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>  subset <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(dplyr<span class="sc">::</span><span class="fu">starts_with</span>(prefix))</span>
+<span id="cb8-6"><a href="#cb8-6"></a></span>
+<span id="cb8-7"><a href="#cb8-7"></a>  <span class="co">#rename variables based on labels list, if provided</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">missing</span>(label_list)) {</span>
+<span id="cb8-9"><a href="#cb8-9"></a>    <span class="fu">colnames</span>(subset) <span class="ot">&lt;-</span> label_list</span>
+<span id="cb8-10"><a href="#cb8-10"></a>  }</span>
+<span id="cb8-11"><a href="#cb8-11"></a></span>
+<span id="cb8-12"><a href="#cb8-12"></a>  <span class="co">#create combined variable in original dataframe, using subset</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a>  data<span class="sc">$</span>combined <span class="ot">&lt;-</span> <span class="fu">colnames</span>(subset)[<span class="fu">max.col</span>(subset)]</span>
+<span id="cb8-14"><a href="#cb8-14"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a>  <span class="co">#factor the combined variable</span></span>
+<span id="cb8-16"><a href="#cb8-16"></a>  data<span class="sc">$</span>combined <span class="ot">&lt;-</span> <span class="fu">factor</span>(data<span class="sc">$</span>combined)</span>
+<span id="cb8-17"><a href="#cb8-17"></a></span>
+<span id="cb8-18"><a href="#cb8-18"></a>  <span class="co">#label the combined variable, if varname provided</span></span>
+<span id="cb8-19"><a href="#cb8-19"></a>  <span class="co">#if not provided, use prefix</span></span>
+<span id="cb8-20"><a href="#cb8-20"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(varname)) {</span>
+<span id="cb8-21"><a href="#cb8-21"></a>    table1<span class="sc">::</span><span class="fu">label</span>(data<span class="sc">$</span>combined) <span class="ot">&lt;-</span> prefix</span>
+<span id="cb8-22"><a href="#cb8-22"></a>  } <span class="cf">else</span> {</span>
+<span id="cb8-23"><a href="#cb8-23"></a>    table1<span class="sc">::</span><span class="fu">label</span>(data<span class="sc">$</span>combined) <span class="ot">&lt;-</span> varname</span>
+<span id="cb8-24"><a href="#cb8-24"></a>  }</span>
+<span id="cb8-25"><a href="#cb8-25"></a></span>
+<span id="cb8-26"><a href="#cb8-26"></a>  <span class="co">#return dataframe, with new combined variable</span></span>
+<span id="cb8-27"><a href="#cb8-27"></a>  <span class="fu">return</span>(data)</span>
+<span id="cb8-28"><a href="#cb8-28"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="what-if" class="slide level2 smaller" data-background-color="#f0edf2">
 <h2>What if…</h2>
-<h3 id="survey-1">SURVEY</h3>
-<blockquote>
+<h4 id="survey-1">SURVEY</h4>
+<div class="callout callout-note no-icon callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
 <p><strong>Select your top 3 most important community aspects:</strong></p>
+</div>
+<div class="callout-content">
 <ol type="a">
 <li>Health</li>
 <li>Education</li>
@@ -540,7 +608,24 @@ Katherine Lu
 <li>Diversity and inclusion</li>
 <li>Housing</li>
 </ol>
-</blockquote>
+</div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>a survey question where you can select multiple options</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="q-select-your-top-3-most-important-community-aspects" class="slide level2" data-background-color="#f0edf2">
 <h2>Q: Select your top 3 most important community aspects</h2>
@@ -549,7 +634,7 @@ Katherine Lu
 <li>dummy variables are NOT exclusive</li>
 <li>cannot combine into one variable</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">head</span>(data1, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">head</span>(data1, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>  Aspect1 Aspect2 Aspect3 Aspect4 Aspect5 Aspect6 Aspect7
@@ -561,6 +646,12 @@ Katherine Lu
 </div>
 </div>
 </section>
+<section id="objective-2" class="slide level2" data-background-color="#f0edf2">
+<h2>Objective 2</h2>
+<p><br>
+</p>
+<h4 id="create-a-function-to-explore-multi-option-dummy-variables-that-cannot-be-combined-into-one-variable">Create a function to explore multi-option dummy variables that cannot be combined into one variable</h4>
+</section>
 <section id="dummyfreq" class="slide level2" data-background-color="#f0edf2">
 <h2>dummyfreq</h2>
 <h4 id="dummyfreqdata-prefix-label_list-title">dummyfreq(data, prefix, label_list, title)</h4>
@@ -570,48 +661,48 @@ Katherine Lu
 <li>label_list: list of labels to rename dummy variables (optional)</li>
 <li>title: title for table 1 (optional)</li>
 </ul>
-<p>Output: table 1 for one set of dummy variables</p>
+<p>Output: table 1 for a set of dummy variables</p>
 </section>
-<section id="example-2" class="slide level2" data-background-color="#f0edf2">
+<section id="example-3" class="slide level2" data-background-color="#f0edf2">
 <h2>Example</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>category_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Health"</span>, <span class="st">"Education"</span>, <span class="st">"Transportation"</span>, <span class="st">"Social services"</span>, <span class="st">"Safety"</span>, <span class="st">"Diversity &amp; inclusion"</span>, <span class="st">"Housing"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2"></a></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="fu">dummyfreq</span>(<span class="at">data=</span>randomsurvey, <span class="at">prefix=</span><span class="st">"Aspect"</span>, <span class="at">label_list=</span>category_names, <span class="at">title=</span><span class="st">"Community aspects"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>category_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Health"</span>, <span class="st">"Education"</span>, <span class="st">"Transportation"</span>, <span class="st">"Social services"</span>, <span class="st">"Safety"</span>, <span class="st">"Diversity &amp; inclusion"</span>, <span class="st">"Housing"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="fu">dummyfreq</span>(<span class="at">data=</span>randomsurvey, <span class="at">prefix=</span><span class="st">"Aspect"</span>, <span class="at">label_list=</span>category_names, <span class="at">title=</span><span class="st">"Community aspects"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 <img data-src="images/dummyfreqtable1.png" width="400" class="r-stretch quarto-figure-center"></section>
 <section id="inside-the-function-1" class="slide level2" data-background-color="#f0edf2">
 <h2>Inside the function</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>dummyfreq <span class="ot">&lt;-</span> <span class="cf">function</span>(data, prefix, label_list, title){</span>
-<span id="cb9-2"><a href="#cb9-2"></a></span>
-<span id="cb9-3"><a href="#cb9-3"></a>  <span class="co">#subset data based on dummy prefix</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a>  data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(dplyr<span class="sc">::</span><span class="fu">starts_with</span>(prefix))</span>
-<span id="cb9-6"><a href="#cb9-6"></a></span>
-<span id="cb9-7"><a href="#cb9-7"></a>  <span class="co">#rename variables based on labels list, if provided</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">missing</span>(label_list)) {</span>
-<span id="cb9-9"><a href="#cb9-9"></a>    <span class="fu">colnames</span>(data) <span class="ot">&lt;-</span> label_list</span>
-<span id="cb9-10"><a href="#cb9-10"></a>  }</span>
-<span id="cb9-11"><a href="#cb9-11"></a></span>
-<span id="cb9-12"><a href="#cb9-12"></a>  <span class="co">#add title if provided</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a>  <span class="co">#if no title argument, use variable prefix</span></span>
-<span id="cb9-14"><a href="#cb9-14"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(title)) {</span>
-<span id="cb9-15"><a href="#cb9-15"></a>    title1 <span class="ot">&lt;-</span> <span class="fu">paste</span>(prefix, <span class="st">"n (%)"</span>)</span>
-<span id="cb9-16"><a href="#cb9-16"></a>  } <span class="cf">else</span> {</span>
-<span id="cb9-17"><a href="#cb9-17"></a>    title1 <span class="ot">&lt;-</span> <span class="fu">paste</span>(title, <span class="st">"n (%)"</span>)</span>
-<span id="cb9-18"><a href="#cb9-18"></a>  }</span>
-<span id="cb9-19"><a href="#cb9-19"></a></span>
-<span id="cb9-20"><a href="#cb9-20"></a>  <span class="co">#turn dummy vars into logicals</span></span>
-<span id="cb9-21"><a href="#cb9-21"></a>  data[<span class="fu">colnames</span>(data)] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(data[<span class="fu">colnames</span>(data)], as.logical)</span>
-<span id="cb9-22"><a href="#cb9-22"></a></span>
-<span id="cb9-23"><a href="#cb9-23"></a>  <span class="co">#create render so that only YES is shown</span></span>
-<span id="cb9-24"><a href="#cb9-24"></a>  rndr <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
-<span id="cb9-25"><a href="#cb9-25"></a>    y <span class="ot">&lt;-</span> table1<span class="sc">::</span><span class="fu">render.default</span>(x, ...)</span>
-<span id="cb9-26"><a href="#cb9-26"></a>    <span class="cf">if</span> (<span class="fu">is.logical</span>(x)) y[<span class="dv">2</span>] <span class="cf">else</span> y</span>
-<span id="cb9-27"><a href="#cb9-27"></a>  }</span>
-<span id="cb9-28"><a href="#cb9-28"></a></span>
-<span id="cb9-29"><a href="#cb9-29"></a>  <span class="co">#create table1</span></span>
-<span id="cb9-30"><a href="#cb9-30"></a>  <span class="fu">return</span>(table1<span class="sc">::</span><span class="fu">table1</span>(<span class="sc">~</span> ., <span class="at">data=</span>data, <span class="at">caption=</span>title1, <span class="at">render=</span>rndr))</span>
-<span id="cb9-31"><a href="#cb9-31"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>dummyfreq <span class="ot">&lt;-</span> <span class="cf">function</span>(data, prefix, label_list, title){</span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="co">#subset data based on dummy prefix</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>  data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(dplyr<span class="sc">::</span><span class="fu">starts_with</span>(prefix))</span>
+<span id="cb12-6"><a href="#cb12-6"></a></span>
+<span id="cb12-7"><a href="#cb12-7"></a>  <span class="co">#rename variables based on labels list, if provided</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">missing</span>(label_list)) {</span>
+<span id="cb12-9"><a href="#cb12-9"></a>    <span class="fu">colnames</span>(data) <span class="ot">&lt;-</span> label_list</span>
+<span id="cb12-10"><a href="#cb12-10"></a>  }</span>
+<span id="cb12-11"><a href="#cb12-11"></a></span>
+<span id="cb12-12"><a href="#cb12-12"></a>  <span class="co">#add title if provided</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a>  <span class="co">#if no title argument, use variable prefix</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(title)) {</span>
+<span id="cb12-15"><a href="#cb12-15"></a>    title1 <span class="ot">&lt;-</span> <span class="fu">paste</span>(prefix, <span class="st">"n (%)"</span>)</span>
+<span id="cb12-16"><a href="#cb12-16"></a>  } <span class="cf">else</span> {</span>
+<span id="cb12-17"><a href="#cb12-17"></a>    title1 <span class="ot">&lt;-</span> <span class="fu">paste</span>(title, <span class="st">"n (%)"</span>)</span>
+<span id="cb12-18"><a href="#cb12-18"></a>  }</span>
+<span id="cb12-19"><a href="#cb12-19"></a></span>
+<span id="cb12-20"><a href="#cb12-20"></a>  <span class="co">#turn dummy vars into logicals</span></span>
+<span id="cb12-21"><a href="#cb12-21"></a>  data[<span class="fu">colnames</span>(data)] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(data[<span class="fu">colnames</span>(data)], as.logical)</span>
+<span id="cb12-22"><a href="#cb12-22"></a></span>
+<span id="cb12-23"><a href="#cb12-23"></a>  <span class="co">#create render so that only YES is shown</span></span>
+<span id="cb12-24"><a href="#cb12-24"></a>  rndr <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb12-25"><a href="#cb12-25"></a>    y <span class="ot">&lt;-</span> table1<span class="sc">::</span><span class="fu">render.default</span>(x, ...)</span>
+<span id="cb12-26"><a href="#cb12-26"></a>    <span class="cf">if</span> (<span class="fu">is.logical</span>(x)) y[<span class="dv">2</span>] <span class="cf">else</span> y</span>
+<span id="cb12-27"><a href="#cb12-27"></a>  }</span>
+<span id="cb12-28"><a href="#cb12-28"></a></span>
+<span id="cb12-29"><a href="#cb12-29"></a>  <span class="co">#create table1</span></span>
+<span id="cb12-30"><a href="#cb12-30"></a>  <span class="fu">return</span>(table1<span class="sc">::</span><span class="fu">table1</span>(<span class="sc">~</span> ., <span class="at">data=</span>data, <span class="at">caption=</span>title1, <span class="at">render=</span>rndr))</span>
+<span id="cb12-31"><a href="#cb12-31"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="thank-you" class="slide level2" data-background-color="#f0edf2">
 <h2>Thank you</h2>
