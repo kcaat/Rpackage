@@ -29,6 +29,7 @@ dummyvar <- function(data, prefix, label_list, varname){
   }
 
   #create combined variable in original dataframe, using subset
+  #finds column with max value (1)
   data$combined <- colnames(subset)[max.col(subset)]
 
   #factor the combined variable

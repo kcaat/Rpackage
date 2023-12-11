@@ -1,7 +1,9 @@
 ---
 title: "dummypack"
 author: "Katherine Lu"
-format: revealjs
+format: 
+  revealjs:
+    embed-resources: true
 editor: visual
 title-slide-attributes: 
   data-background-color: "#f0edf2"
@@ -77,7 +79,7 @@ data2 <- dummyvar(data=data1, prefix="AreaType", label_list=area_labels, varname
 ```
 
 ::: notes
-- we will apply dummyvar to our example data (discuss arguments)
+-   we will apply dummyvar to our example data (discuss arguments)
 :::
 
 ## Example {background-color="#f0edf2"}
@@ -132,7 +134,7 @@ head(data2[, c('AreaType1', 'AreaType2', 'AreaType3', 'combined')], n=8)
 ```
 
 ::: notes
-- the dataset now has the new column "combined"
+-   the dataset now has the new column "combined"
 :::
 
 ## Example {background-color="#f0edf2"}
@@ -184,8 +186,8 @@ dummyvar <- function(data, prefix, label_list, varname){
 
 ::: notes
 -   create combined variable:
-- max.col looks for the column with the highest value in each row (aka the 1)
-- and it takes the name of the column with the 1, and that becomes the value in the new variable combined
+-   max.col looks for the column with the highest value in each row (aka the 1)
+-   and it takes the name of the column with the 1, and that becomes the value in the new variable combined
 :::
 
 ## What if... {.smaller background-color="#f0edf2"}
