@@ -3,6 +3,8 @@ title: "dummypack"
 author: "Katherine Lu"
 format: revealjs
 editor: visual
+title-slide-attributes: 
+  data-background-color: "#f0edf2"
 ---
 
 ## Imagine... {background-color="#f0edf2"}
@@ -180,6 +182,12 @@ dummyvar <- function(data, prefix, label_list, varname){
 }
 ```
 
+::: notes
+-   create combined variable:
+- max.col looks for the column with the highest value in each row (aka the 1)
+- and it takes the name of the column with the 1, and that becomes the value in the new variable combined
+:::
+
 ## What if... {.smaller background-color="#f0edf2"}
 
 #### SURVEY
@@ -243,7 +251,19 @@ category_names <- c("Health", "Education", "Transportation", "Social services", 
 dummyfreq(data=randomsurvey, prefix="Aspect", label_list=category_names, title="Community aspects")
 ```
 
+## Example {background-color="#f0edf2"}
+
+``` r
+category_names <- c("Health", "Education", "Transportation", "Social services", "Safety", "Diversity & inclusion", "Housing")
+
+dummyfreq(data=randomsurvey, prefix="Aspect", label_list=category_names, title="Community aspects")
+```
+
 ![](images/dummyfreqtable1.png){fig-align="center" width="400"}
+
+::: notes
+-   limitation: doesn't show missing
+:::
 
 ## Inside the function {background-color="#f0edf2"}
 
