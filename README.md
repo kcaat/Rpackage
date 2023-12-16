@@ -10,7 +10,7 @@ library(dummypack)
 ```
 ## Function: dummyvar
 Combines dummy variables into one variable, outputting your data frame with new combined variable
-### Arguments: dummyvar(data, prefix, label_list, varname)
+### Arguments: `dummyvar(data, prefix, label_list, varname)`
 * **data:** your data frame
 * **prefix:** prefix that identifies a group of dummy variables (all dummy variables should start with the same prefix that is unique to one group)
 * **label_list (OPTIONAL):** list of variable categories
@@ -21,16 +21,22 @@ Combines dummy variables into one variable, outputting your data frame with new 
   + if not provided, will not label
 
 ### Example
-Example data
-```{r}
-surveydata <- read.csv(here("data/randomsurvey.csv"))
-data1 <- surveydata %>%
-    select(starts_with("AreaType"))
-head(data1, n = 10)
+* Example data where AreaType1/2/3 are dummy variables
+* `dummyvar` adds the new variable 'combined' to the data frame
+```r
+area_labels <- c("urban", "suburban", "rural")
+dummyvar(data=surveydata, prefix="AreaType", label_list=area_labels)
 ```
 
+AreaType1 | AreaType2 | AreaType2 | combined
+--------- | --------- | --------- | ---------
+0 | 1 | 0 | surburban
+1 | 0 | 0 | urban
+1 | 0 | 0 | urban
+0 | 0 | 1 | rural
+
 ## Function: dummyfreq
-### Arguments: dummyvar(data, prefix, label_list, title)
+### Arguments: `dummyvar(data, prefix, label_list, title)`
 * **data:** your data frame
 * **prefix:** prefix that identifies a group of dummy variables (all dummy variables should start with the same prefix that is unique to one group)
 * **label_list (OPTIONAL):** list of variable categories
