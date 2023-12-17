@@ -1,10 +1,11 @@
 ---
+title: "README2"
+author: "Katherine Lu"
+date: "2023-12-17"
+output: html_document
 editor_options: 
   markdown: 
     wrap: 72
-  chunk_output_type: inline
-output:
-  html_document
 ---
 
 # dummypack
@@ -88,9 +89,9 @@ category_names <- c("Health", "Education", "Transportation", "Social services", 
 dummyfreq(data=randomsurvey, prefix="Aspect", label_list=category_names, title="Community aspects")
 ```
 
-```{r}
+```{r, echo=FALSE}
 library(dplyr)
 library(table1)
 category_names <- c("Health", "Education", "Transportation", "Social services", "Safety", "Diversity & inclusion", "Housing")
-dummyfreq(data=randomsurvey, prefix="Aspect", label_list=category_names, title="Community aspects")
+dummypack::dummyfreq(data=randomsurvey, prefix="Aspect", label_list=category_names, title="Community aspects")
 ```
