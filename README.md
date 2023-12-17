@@ -1,13 +1,3 @@
----
-title: "README2"
-author: "Katherine Lu"
-date: "2023-12-17"
-output: html_document
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 # dummypack
 
 -   Package for processing dummy variables
@@ -38,6 +28,7 @@ variable + if not provided, will not label
 -   Example data where AreaType1/2/3 are dummy variables for a multiple
     choice survey question "What type of area do you live in?"
 -   `dummyvar` adds the new variable 'combined' to the data frame
+- NOTE: if this function is used multiple times for different sets of dummy variables, will need to rename 'combined' variable or it will be overwritten each time
 
 ``` r
 area_labels <- c("urban", "suburban", "rural")
@@ -74,7 +65,9 @@ dummyvar(data=surveydata, prefix="AreaType", label_list=area_labels)
     aspects for your community?"
 -   Aspect1/2/3/4/5/6/7 are dummy variables that cannot be combined
     because they are not exclusive
--   `dummyfreq` produces a frequency table
+-   `dummyfreq` produces a frequency table showing n (%) of each
+    category
+- NOTE: frequency table does not include missing values
 
 | Aspect1 | Aspect2 | Aspect3 | Aspect4 | Aspect5 | Aspect6 | Aspect7 |
 |---------|---------|---------|---------|---------|---------|---------|
@@ -87,11 +80,4 @@ dummyvar(data=surveydata, prefix="AreaType", label_list=area_labels)
 ``` r
 category_names <- c("Health", "Education", "Transportation", "Social services", "Safety", "Diversity & inclusion", "Housing")
 dummyfreq(data=randomsurvey, prefix="Aspect", label_list=category_names, title="Community aspects")
-```
-
-```{r, echo=FALSE}
-library(dplyr)
-library(table1)
-category_names <- c("Health", "Education", "Transportation", "Social services", "Safety", "Diversity & inclusion", "Housing")
-dummypack::dummyfreq(data=randomsurvey, prefix="Aspect", label_list=category_names, title="Community aspects")
 ```
