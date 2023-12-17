@@ -1,7 +1,9 @@
 # dummypack
 
 -   Package for processing dummy variables
--   Required packages: dplyr, table1 \### R installation instructions
+-   Required packages: dplyr, table1
+
+### R installation instructions
 
 ``` r
 install.packages("devtools")
