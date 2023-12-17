@@ -3,6 +3,7 @@
 -   Package for processing dummy variables
 -   Required packages: dplyr, table1
 
+
 ### R installation instructions
 
 ``` r
